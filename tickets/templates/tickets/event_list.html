@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Upcoming shows</h2>
+<ul class="cards">
+  {% for event in events %}
+    <li>
+      <strong>{{ event.artist }}</strong><br>
+      <span class="muted">{{ event.venue }}, {{ event.city }} — {{ event.starts_at|date:"j M Y, H:i" }}</span>
+    </li>
+  {% empty %}
+    <li class="muted">No shows loaded. Run <code>python manage.py loaddata demo</code>.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

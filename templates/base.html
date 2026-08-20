@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Setlist{% endblock %}</title>
+  <style>
+    :root { color-scheme: light dark; --line: color-mix(in srgb, currentColor 15%, transparent); }
+    * { box-sizing: border-box; }
+    body { font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0;
+           padding: 0 1rem 4rem; max-width: 46rem; margin-inline: auto; }
+    header { display: flex; align-items: baseline; gap: 1rem; padding: 1.5rem 0;
+             border-bottom: 1px solid var(--line); margin-bottom: 2rem; }
+    header h1 { font-size: 1.25rem; margin: 0; letter-spacing: -0.02em; }
+    header nav { margin-left: auto; display: flex; gap: 1rem; align-items: baseline; }
+    a { color: inherit; }
+    h2 { letter-spacing: -0.02em; }
+    ul.cards { list-style: none; padding: 0; display: grid; gap: 0.75rem; }
+    ul.cards li { border: 1px solid var(--line); border-radius: 10px; padding: 1rem; }
+    .muted { opacity: 0.65; font-size: 0.9rem; }
+    form { display: grid; gap: 1rem; max-width: 24rem; }
+    label { display: block; font-weight: 600; margin-bottom: 0.25rem; }
+    input[type=text], input[type=password] { width: 100%; padding: 0.6rem 0.7rem; font: inherit;
+      border: 1px solid var(--line); border-radius: 8px; background: transparent; color: inherit; }
+    button { font: inherit; font-weight: 600; padding: 0.6rem 1.1rem; border-radius: 8px;
+             border: 1px solid transparent; background: #6c3cf4; color: #fff; cursor: pointer; }
+    button.link { background: none; color: inherit; border: none; padding: 0;
+                  font-weight: 400; text-decoration: underline; }
+    .messages { list-style: none; padding: 0; display: grid; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .messages li { padding: 0.7rem 0.9rem; border-radius: 8px; border: 1px solid var(--line); }
+    .messages li.error { border-color: #d13b3b; }
+    .errorlist { list-style: none; padding: 0; margin: 0.35rem 0 0; color: #d13b3b; font-size: 0.9rem; }
+    .helptext { display: block; margin-top: 0.35rem; }
+    .callout { border: 1px solid var(--line); border-left-width: 4px; border-left-color: #6c3cf4;
+               border-radius: 8px; padding: 0.9rem 1rem; margin: 1.5rem 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="{% url 'tickets:index' %}" style="text-decoration:none">Setlist</a></h1>
+    <nav>
+      {% if user.is_authenticated %}
+        <a href="{% url 'tickets:list' %}">My tickets</a>
+        <form action="{% url 'logout' %}" method="post" style="display:inline">
+          {% csrf_token %}
+          <button type="submit" class="link">Sign out ({{ user.username }})</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}">Sign in</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}<li class="{{ message.tags }}">{{ message }}</li>{% endfor %}
+    </ul>
+  {% endif %}
+
+  {% block content %}{% endblock %}
+</body>
+</html>

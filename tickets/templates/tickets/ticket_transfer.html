@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Transfer ticket — Setlist{% endblock %}
+
+{% block content %}
+<h2>Transfer your ticket</h2>
+
+<p class="muted">
+  {{ ticket.event.artist }} — {{ ticket.event.venue }},
+  {{ ticket.event.starts_at|date:"j M Y" }} · {{ ticket.section }} {{ ticket.seat }}
+</p>
+
+<div class="callout">
+  Verified. This transfer is authorised for the next {{ seconds_remaining }} seconds.
+  Transfers cannot be undone.
+</div>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_div }}
+  <div><button type="submit">Transfer ticket</button></div>
+</form>
+{% endblock %}

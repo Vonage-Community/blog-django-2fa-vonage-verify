@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Sign in — Setlist{% endblock %}
+
+{% block content %}
+<h2>Sign in</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_div }}
+  <div><button type="submit">Sign in</button></div>
+</form>
+
+<p class="muted">Demo accounts: <code>ada</code> / <code>grace</code>, password <code>setlist-demo</code>.</p>
+{% endblock %}

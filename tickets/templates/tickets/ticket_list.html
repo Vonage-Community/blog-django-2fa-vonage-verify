@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}My tickets — Setlist{% endblock %}
+
+{% block content %}
+<h2>My tickets</h2>
+<ul class="cards">
+  {% for ticket in tickets %}
+    <li>
+      <strong>{{ ticket.event.artist }}</strong><br>
+      <span class="muted">
+        {{ ticket.event.venue }} — {{ ticket.event.starts_at|date:"j M Y" }} ·
+        {{ ticket.section }} {{ ticket.seat }}
+      </span><br>
+      <a href="{% url 'tickets:transfer' ticket.pk %}">Transfer this ticket</a>
+    </li>
+  {% empty %}
+    <li class="muted">You are not holding any tickets.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ ticket.event.artist }}</h2>
+<p class="muted">
+  {{ ticket.event.venue }}, {{ ticket.event.city }}<br>
+  {{ ticket.event.starts_at|date:"j M Y, H:i" }}<br>
+  {{ ticket.section }} {{ ticket.seat }}
+</p>
+<p><a href="{% url 'tickets:transfer' ticket.pk %}">Transfer this ticket</a></p>
+{% endblock %}
