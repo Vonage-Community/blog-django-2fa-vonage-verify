@@ -15,7 +15,7 @@ from .models import Event, Ticket, Transfer
 
 
 class EventListView(ListView):
-    """The public front page. No login, no verification — nothing is at stake here."""
+    """The public front page. No login, no verification. Nothing is at stake here."""
 
     model = Event
     template_name = "tickets/event_list.html"
@@ -56,9 +56,9 @@ class TicketTransferView(VerificationRequiredMixin, View):
         """Load the ticket lazily, from `get()`/`post()`, never from `dispatch()`.
 
         The access mixins do their work in `dispatch()`. Fetching the object there
-        too — as an earlier draft of this view did — runs the ownership filter
-        against `AnonymousUser`, and a visitor who should have been sent to the login
-        page gets a 404 instead.
+        too, as an earlier draft of this view did, runs the ownership filter against
+        `AnonymousUser`. A visitor who should have been sent to the login page gets a
+        404 instead.
         """
         return get_object_or_404(
             Ticket.objects.select_related("event"),
@@ -85,7 +85,7 @@ class TicketTransferView(VerificationRequiredMixin, View):
             self.ticket.save(update_fields=["owner"])
 
         # One verification, one transfer. Leaving the session verified would let a
-        # single code authorise every ticket in the account.
+        # single code authorize every ticket in the account.
         session.clear(request.session)
 
         messages.success(request, f"{self.ticket.event.artist} is on its way to {form.recipient.username}.")

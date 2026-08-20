@@ -12,8 +12,9 @@ class VerificationRequiredMixin(LoginRequiredMixin):
 
     Drop it onto the handful of views that do something irreversible. It extends
     `LoginRequiredMixin`, so an anonymous visitor is sent to log in and a signed-in
-    visitor is sent to verify — two different problems with two different answers,
-    which is why this is not one `UserPassesTestMixin` test with a branch inside it.
+    visitor is sent to verify. Those are two different problems with two different
+    answers, which is why this is not one `UserPassesTestMixin` test with a branch
+    inside it.
     """
 
     def dispatch(self, request, *args, **kwargs):

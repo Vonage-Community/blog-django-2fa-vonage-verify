@@ -64,7 +64,7 @@ def pending_number(session):
 
 
 def last_request_id(session):
-    """The Verify request that authorised the current verification, for audit records."""
+    """The Verify request that authorized the current verification, for audit records."""
     return session.get(LAST_REQUEST_ID_KEY, "")
 
 
@@ -73,7 +73,7 @@ def safe_next(request, fallback="/"):
 
     Django's login view does this and so must anything else that redirects to a
     user-supplied URL. Without the check, `?next=https://evil.example` turns your
-    verification flow into an open redirect — a credible-looking link on your own
+    verification flow into an open redirect: a credible-looking link on your own
     domain that lands the user somewhere else entirely.
     """
     candidate = request.POST.get("next") or request.GET.get("next")

@@ -102,7 +102,7 @@ class TransferTests(TestCase):
         self.ticket.refresh_from_db()
         self.assertEqual(self.ticket.owner, self.grace)
 
-    def test_a_transfer_records_which_verification_authorised_it(self):
+    def test_a_transfer_records_which_verification_authorized_it(self):
         self.client.post(self.url, {"username": "grace"})
 
         transfer = Transfer.objects.get()
@@ -110,7 +110,7 @@ class TransferTests(TestCase):
         self.assertEqual(transfer.recipient, self.grace)
         self.assertEqual(transfer.verification_request_id, "abc-123")
 
-    def test_one_verification_authorises_exactly_one_transfer(self):
+    def test_one_verification_authorizes_exactly_one_transfer(self):
         second = Ticket.objects.create(
             event=self.event, owner=self.ada, section="Floor", seat="A13"
         )

@@ -39,5 +39,5 @@ class VerifiedPhone(models.Model):
 
     @property
     def masked_number(self):
-        """Show enough of the number to be recognisable, not enough to be useful."""
+        """Show enough of the number to be recognizable, not enough to be useful."""
         return f"•••••• {self.number[-4:]}" if len(self.number) >= 4 else "••••••"

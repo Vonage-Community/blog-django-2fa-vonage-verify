@@ -1,4 +1,4 @@
-# Setlist — step-up two-factor authentication with Django and Vonage Verify
+# Setlist: step-up two-factor authentication with Django and Vonage Verify
 
 A small Django app that demonstrates **step-up authentication**: a password gets you
 into the account, but moving something of value out of it takes a code sent to your
@@ -6,7 +6,7 @@ phone by the [Vonage Verify API](https://developer.vonage.com/en/verify/overview
 
 Setlist holds concert tickets. You can browse shows and look at your own tickets with
 nothing but a session cookie. Transferring a ticket to someone else is irreversible,
-so that one view — and only that view — asks you to prove you still have the phone.
+so that one view, and only that view, asks you to prove you still have the phone.
 
 Companion code for the blog post *Add Two-Factor Authentication to Your Django App
 With Vonage Verify*.
@@ -24,7 +24,7 @@ With Vonage Verify*.
 ## Requirements
 
 - Python 3.12 or newer
-- A [Vonage API account](https://developer.vonage.com/sign-up) — the API key and
+- A [Vonage API account](https://developer.vonage.com/sign-up), for the API key and
   secret from the [dashboard](https://dashboard.nexmo.com/settings)
 - A phone that can receive SMS
 
@@ -80,7 +80,7 @@ python manage.py test
 | --- | --- |
 | `stepup/client.py` | The only module that knows about Vonage. Starts and checks verifications, turns API failures into user-facing messages. |
 | `stepup/session.py` | Where a verification lives between requests, and when it expires. Also validates `?next=`. |
-| `stepup/mixins.py` | `VerificationRequiredMixin` — the guard you put on sensitive views. |
+| `stepup/mixins.py` | `VerificationRequiredMixin`, the guard you put on sensitive views. |
 | `stepup/views.py` | The two-step flow: choose a number, then enter the code. |
 | `stepup/models.py` | `VerifiedPhone`, a one-to-one with the user. |
 | `tickets/views.py` | The demo app. `TicketTransferView` is the one view behind the mixin. |
@@ -100,6 +100,6 @@ python manage.py test
 
 This is a tutorial app, not a product. Before anything like it goes near real users
 you would also want: rate limiting on the verification endpoints themselves, a
-recovery path for a lost phone, and a decision about which other actions — changing
-a password, changing the phone number, adding a payout method — belong behind the
-same mixin.
+recovery path for a lost phone, and a decision about which other actions belong
+behind the same mixin: changing a password, changing the phone number, or adding a
+payout method.

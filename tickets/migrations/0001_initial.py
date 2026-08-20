@@ -45,7 +45,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('verification_request_id', models.CharField(blank=True, help_text='The Vonage Verify request that authorised this transfer.', max_length=64)),
+                ('verification_request_id', models.CharField(blank=True, help_text='The Vonage Verify request that authorized this transfer.', max_length=64)),
                 ('recipient', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='transfers_received', to=settings.AUTH_USER_MODEL)),
                 ('sender', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='transfers_sent', to=settings.AUTH_USER_MODEL)),
                 ('ticket', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='transfers', to='tickets.ticket')),

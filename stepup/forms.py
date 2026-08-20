@@ -9,11 +9,11 @@ DECORATION = re.compile(r"[\s()\-.]")
 
 
 class PhoneNumberField(forms.CharField):
-    """A CharField that normalises before it validates.
+    """A CharField that normalizes before it validates.
 
     The order matters. Django runs `to_python()`, then the field validators, then
-    `clean_<field>()` on the form. Normalising in `clean_number()` would be too late:
-    the E.164 validator would already have rejected `+44 7700 900000` — a number that
+    `clean_<field>()` on the form. Normalizing in `clean_number()` would be too late:
+    the E.164 validator would already have rejected `+44 7700 900000`, a number that
     is perfectly fine once you take the spaces out.
     """
 

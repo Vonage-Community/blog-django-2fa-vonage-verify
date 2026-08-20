@@ -42,7 +42,7 @@ def get_client():
     Verify v2 accepts either JWT or Basic authentication. Passing an API key and
     secret selects Basic, which keeps this demo to two environment variables and no
     private key file. For production, application ID plus private key is the better
-    default — it is also what you need if you want asynchronous status callbacks.
+    default, and it is what you need if you want asynchronous status callbacks.
     """
     global _client
     if _client is None:

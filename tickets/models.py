@@ -66,7 +66,7 @@ class Transfer(models.Model):
     verification_request_id = models.CharField(
         max_length=64,
         blank=True,
-        help_text="The Vonage Verify request that authorised this transfer.",
+        help_text="The Vonage Verify request that authorized this transfer.",
     )
 
     class Meta:
