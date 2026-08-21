@@ -1,20 +1,33 @@
 {% extends "base.html" %}
-{% block title %}Verify it's you — Setlist{% endblock %}
+{% block title %}Confirm it's you — Setlist{% endblock %}
 
 {% block content %}
-<h2>Verify it's you</h2>
+<div class="page-head">
+  <p class="eyebrow">Step 1 of 3 · Security check</p>
+  <h1>Confirm it's you</h1>
+</div>
 
-<form method="post">
-  {% csrf_token %}
-  <input type="hidden" name="next" value="{{ next }}">
+<div class="card">
+  <div class="callout callout-warn" style="margin-bottom:1.5rem">
+    <strong>Why we're asking.</strong> Your password got you into this account.
+    Transferring a ticket moves something worth real money out of it, and it cannot be
+    reversed. A code sent to your phone confirms it's you and not someone using a
+    signed-in browser.
+  </div>
 
-  {% if phone %}
-    <p>We'll text a code to <strong>{{ phone.masked_number }}</strong>.</p>
-  {% else %}
-    <p>Transfers need a second factor. Tell us where to send your codes.</p>
-    {{ form.as_div }}
-  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}">
 
-  <div><button type="submit">Send me a code</button></div>
-</form>
+    {% if phone %}
+      <p style="margin:0">We'll text a 6-digit code to <strong>{{ phone.masked_number }}</strong>.</p>
+    {% else %}
+      {{ form.as_div }}
+    {% endif %}
+
+    <div><button type="submit" class="btn">Text me a code</button></div>
+  </form>
+
+  <div class="powered">Verification by Vonage Verify</div>
+</div>
 {% endblock %}

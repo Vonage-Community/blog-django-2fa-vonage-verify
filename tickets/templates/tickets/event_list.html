@@ -1,14 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Upcoming shows</h2>
-<ul class="cards">
+<div class="page-head">
+  <p class="eyebrow">On sale</p>
+  <h1>Upcoming shows</h1>
+  <p>Browsing is open to everyone. Sign in to see the tickets you hold.</p>
+</div>
+
+<ul class="tickets">
   {% for event in events %}
-    <li>
-      <strong>{{ event.artist }}</strong><br>
-      <span class="muted">{{ event.venue }}, {{ event.city }} — {{ event.starts_at|date:"j M Y, H:i" }}</span>
+    <li class="stub">
+      <div class="stub-edge"></div>
+      <div class="stub-body">
+        <h2>{{ event.artist }}</h2>
+        <div class="stub-meta">{{ event.venue }}, {{ event.city }}</div>
+        <div class="stub-tags"><span class="tag">{{ event.starts_at|date:"D j M Y, H:i" }}</span></div>
+      </div>
+      <div class="stub-side"><span class="tag">Sold out</span></div>
     </li>
   {% empty %}
-    <li class="muted">No shows loaded. Run <code>python manage.py loaddata demo</code>.</li>
+    <li class="card"><p class="muted">No shows loaded. Run <code>python manage.py seed_demo</code>.</p></li>
   {% endfor %}
 </ul>
 {% endblock %}

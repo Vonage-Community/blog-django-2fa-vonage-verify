@@ -2,21 +2,41 @@
 {% block title %}Transfer ticket — Setlist{% endblock %}
 
 {% block content %}
-<h2>Transfer your ticket</h2>
-
-<p class="muted">
-  {{ ticket.event.artist }} — {{ ticket.event.venue }},
-  {{ ticket.event.starts_at|date:"j M Y" }} · {{ ticket.section }} {{ ticket.seat }}
-</p>
-
-<div class="callout">
-  Verified. This transfer is authorized for the next {{ seconds_remaining }} seconds.
-  Transfers cannot be undone.
+<div class="page-head">
+  <p class="eyebrow">Step 3 of 3 · Verified</p>
+  <h1>Transfer your ticket</h1>
 </div>
 
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_div }}
-  <div><button type="submit">Transfer ticket</button></div>
-</form>
+<div class="stub" style="max-width:32rem;margin-bottom:1rem">
+  <div class="stub-edge"></div>
+  <div class="stub-body">
+    <h2>{{ ticket.event.artist }}</h2>
+    <div class="stub-meta">
+      {{ ticket.event.venue }}, {{ ticket.event.city }} · {{ ticket.event.starts_at|date:"D j M Y" }}
+    </div>
+    <div class="stub-tags">
+      <span class="tag">{{ ticket.section }} {{ ticket.seat }}</span>
+      <span class="tag">{{ ticket.reference }}</span>
+      <span class="tag">${{ ticket.face_value|floatformat:0 }}</span>
+    </div>
+  </div>
+</div>
+
+<div class="callout callout-warn" style="max-width:32rem;margin-bottom:1rem">
+  <strong>This cannot be undone.</strong> Once you transfer, the ticket belongs to the
+  other account. Only they can transfer it back, and only if they agree to.
+</div>
+
+<div class="card">
+  <div class="callout callout-verified" style="margin-bottom:1.25rem">
+    <strong>Identity confirmed.</strong> This transfer is authorized for the next
+    {{ seconds_remaining }} seconds, and covers this ticket only.
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <div><button type="submit" class="btn">Transfer ${{ ticket.face_value|floatformat:0 }} ticket</button></div>
+  </form>
+</div>
 {% endblock %}

@@ -16,9 +16,9 @@ User = get_user_model()
 DEMO_PASSWORD = "setlist-demo"
 
 SHOWS = [
-    ("Sylvan Wake", "Paradiso", "Amsterdam", 12, [("Floor", "A12"), ("Floor", "A13")]),
-    ("Neon Cartographer", "Village Underground", "London", 26, [("Balcony", "C4")]),
-    ("The Long Wave", "Barby", "Tel Aviv", 41, [("Standing", "GA")]),
+    ("Sylvan Wake", "Paradiso", "Amsterdam", 12, [("Floor", "A12", 145), ("Floor", "A13", 145)]),
+    ("Neon Cartographer", "Village Underground", "London", 26, [("Balcony", "C4", 88)]),
+    ("The Long Wave", "Barby", "Tel Aviv", 41, [("Standing", "GA", 62)]),
 ]
 
 
@@ -36,9 +36,12 @@ class Command(BaseCommand):
                 venue=venue,
                 defaults={"city": city, "starts_at": now + timedelta(days=days)},
             )
-            for section, seat in seats:
+            for section, seat, face_value in seats:
                 Ticket.objects.get_or_create(
-                    event=event, section=section, seat=seat, defaults={"owner": owner}
+                    event=event,
+                    section=section,
+                    seat=seat,
+                    defaults={"owner": owner, "face_value": face_value},
                 )
 
         self.stdout.write(

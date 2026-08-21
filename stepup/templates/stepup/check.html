@@ -2,18 +2,24 @@
 {% block title %}Enter your code — Setlist{% endblock %}
 
 {% block content %}
-<h2>Enter your code</h2>
+<div class="page-head">
+  <p class="eyebrow">Step 2 of 3 · Security check</p>
+  <h1>Enter your code</h1>
+  <p>We sent a 6-digit code to <strong>{{ masked_number }}</strong>. It expires in a few minutes.</p>
+</div>
 
-<p>We sent a code to <strong>{{ masked_number }}</strong>.</p>
+<div class="card">
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <div class="code-input">{{ form.as_div }}</div>
+    <div><button type="submit" class="btn">Confirm and continue</button></div>
+  </form>
 
-<form method="post">
-  {% csrf_token %}
-  <input type="hidden" name="next" value="{{ next }}">
-  {{ form.as_div }}
-  <div><button type="submit">Verify</button></div>
-</form>
+  <p class="form-note" style="margin-top:1.25rem">
+    Didn't get it? <a href="{% url 'stepup:start' %}?next={{ next|urlencode }}">Send a new code</a>.
+  </p>
 
-<p class="muted">
-  Didn't get it? <a href="{% url 'stepup:start' %}?next={{ next|urlencode }}">Send a new code</a>.
-</p>
+  <div class="powered">Verification by Vonage Verify</div>
+</div>
 {% endblock %}

@@ -27,6 +27,13 @@ class Ticket(models.Model):
     )
     section = models.CharField(max_length=40)
     seat = models.CharField(max_length=10)
+    face_value = models.DecimalField(
+        max_digits=8,
+        decimal_places=2,
+        default=0,
+        help_text="What the ticket cost. Shown on the transfer screen so the person "
+        "giving it away can see what they are giving away.",
+    )
 
     class Meta:
         ordering = ["event__starts_at", "section", "seat"]
@@ -41,6 +48,11 @@ class Ticket(models.Model):
 
     def get_absolute_url(self):
         return reverse("tickets:detail", args=[self.pk])
+
+    @property
+    def reference(self):
+        """A quotable order reference for the ticket stub."""
+        return f"SL-{self.pk:06d}"
 
 
 class Transfer(models.Model):

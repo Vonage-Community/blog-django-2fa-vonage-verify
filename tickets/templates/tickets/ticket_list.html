@@ -2,19 +2,33 @@
 {% block title %}My tickets — Setlist{% endblock %}
 
 {% block content %}
-<h2>My tickets</h2>
-<ul class="cards">
+<div class="page-head">
+  <p class="eyebrow">Your account</p>
+  <h1>My tickets</h1>
+  <p>Anyone signed in as you can see this page. Moving a ticket takes more than that.</p>
+</div>
+
+<ul class="tickets">
   {% for ticket in tickets %}
-    <li>
-      <strong>{{ ticket.event.artist }}</strong><br>
-      <span class="muted">
-        {{ ticket.event.venue }} — {{ ticket.event.starts_at|date:"j M Y" }} ·
-        {{ ticket.section }} {{ ticket.seat }}
-      </span><br>
-      <a href="{% url 'tickets:transfer' ticket.pk %}">Transfer this ticket</a>
+    <li class="stub">
+      <div class="stub-edge"></div>
+      <div class="stub-body">
+        <h2>{{ ticket.event.artist }}</h2>
+        <div class="stub-meta">
+          {{ ticket.event.venue }}, {{ ticket.event.city }} · {{ ticket.event.starts_at|date:"D j M Y, H:i" }}
+        </div>
+        <div class="stub-tags">
+          <span class="tag">{{ ticket.section }} {{ ticket.seat }}</span>
+          <span class="tag">{{ ticket.reference }}</span>
+        </div>
+      </div>
+      <div class="stub-side">
+        <span class="value">${{ ticket.face_value|floatformat:0 }}<small>Face value</small></span>
+        <a class="btn btn-ghost" href="{% url 'tickets:transfer' ticket.pk %}">Transfer</a>
+      </div>
     </li>
   {% empty %}
-    <li class="muted">You are not holding any tickets.</li>
+    <li class="card"><p class="muted">You are not holding any tickets.</p></li>
   {% endfor %}
 </ul>
 {% endblock %}
