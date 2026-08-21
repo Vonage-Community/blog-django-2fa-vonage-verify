@@ -19,6 +19,7 @@ from vonage_http_client.errors import HttpRequestError
 from vonage_verify import SmsChannel, VerifyRequest
 
 logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 _client = None
 
@@ -77,6 +78,7 @@ def start_verification(number):
         ) from err
 
     try:
+        logger.info("Starting verification process ...")
         response = get_client().verify.start_verification(request)
     except HttpRequestError as err:
         raise VerificationError(_start_message(err), restart=True) from err
@@ -87,6 +89,7 @@ def start_verification(number):
 def check_code(request_id, code):
     """Submit a code for `request_id`. Returns None on success, raises otherwise."""
     try:
+        logger.info("Checking code for request %s", request_id)
         get_client().verify.check_code(request_id=request_id, code=code)
     except HttpRequestError as err:
         message, restart = _check_message(err)
@@ -100,6 +103,7 @@ def cancel_verification(request_id):
     cancel and nothing the user needs to know about it.
     """
     try:
+        logger.info("Canceling verification for request %s", request_id)
         get_client().verify.cancel_verification(request_id)
     except HttpRequestError:
         logger.info("Could not cancel Verify request %s", request_id, exc_info=True)
