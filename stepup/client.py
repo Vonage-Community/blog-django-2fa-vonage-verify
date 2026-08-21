@@ -58,7 +58,7 @@ def get_client():
 def start_verification(number):
     """Ask Vonage to send a code to `number`. Returns the request ID.
 
-    The workflow list is ordered. SMS alone is the simplest thing that works; add a
+    The workflow list is ordered. A single SMS channel covers the common case. Add a
     `VoiceChannel(to=number)` after it and Vonage reads the code out over a phone
     call if the SMS has not been acted on within `channel_timeout` seconds.
     """
