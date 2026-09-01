@@ -1,4 +1,4 @@
-# Setlist: step-up two-factor authentication with Django and Vonage Verify
+# Setlist: Step-up two-factor authentication with Django and Vonage Verify
 
 A small Django app that demonstrates **step-up authentication**: a password gets you
 into the account, but moving something of value out of it takes a code sent to your
@@ -25,7 +25,7 @@ With Vonage Verify*.
 
 - Python 3.12 or newer
 - A [Vonage API account](https://developer.vonage.com/sign-up), for the API key and
-  secret from the [dashboard](https://dashboard.nexmo.com/settings)
+  secret from the [dashboard](https://dashboard.vonage.com/settings)
 - A phone that can receive SMS
 
 ## Setup
@@ -76,6 +76,57 @@ python manage.py test
 
 ## How it fits together
 
+The file structure is as follows:
+
+```
+blog-django-2fa-vonage-verify/
+├── setlist/                    # Main Django project settings
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   ├── asgi.py
+│   └── wsgi.py
+│
+├── stepup/                     # Two-factor authentication app
+│   ├── migrations/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── client.py              # Vonage API integration
+│   ├── mixins.py              # VerificationRequiredMixin for views
+│   ├── models.py              # VerifiedPhone model
+│   ├── session.py             # Verification session management
+│   ├── tests.py               # 47 tests (no network/SMS calls)
+│   ├── urls.py
+│   └── views.py               # Verification flow views
+│
+├── tickets/                    # Demo app for ticket transfers
+│   ├── migrations/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py               # TicketTransferView (uses mixin)
+│
+├── templates/                  # HTML templates
+│   ├── base.html
+│   ├── login.html
+│   ├── ticket_list.html
+│   ├── ticket_transfer.html
+│   ├── verify_code.html        # Enter SMS code
+│   └── verify_phone.html       # Choose phone number
+│
+├── manage.py                  # Django management script
+├── requirements.txt           # Python dependencies
+├── .env.example              # Example environment variables
+├── .gitignore                # Git ignore rules
+└── README.md                 # Documentation
+```
+
+The following files specifically are responsible for the following:
+
 | File | What it does |
 | --- | --- |
 | `stepup/client.py` | The only module that knows about Vonage. Starts and checks verifications, turns API failures into user-facing messages. |
@@ -84,6 +135,8 @@ python manage.py test
 | `stepup/views.py` | The two-step flow: choose a number, then enter the code. |
 | `stepup/models.py` | `VerifiedPhone`, a one-to-one with the user. |
 | `tickets/views.py` | The demo app. `TicketTransferView` is the one view behind the mixin. |
+
+
 
 ## Configuration
 
